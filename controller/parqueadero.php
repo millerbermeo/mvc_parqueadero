@@ -28,6 +28,15 @@ class parqueadero
         require_once "views/form.php";
     }
 
+    public function show(){
+        if(isset($_POST['matricula'])){
+            $idVehiculo = $_POST['matricula'];
+            $dato = $this->Model->listarPersonalizado($idVehiculo);
+            require_once "views/show.php";
+        }
+
+    }
+
     public function salida()
     {
         if (isset($_GET['id'])) {
@@ -82,14 +91,15 @@ class parqueadero
 
         $diferencia = $fecha_entrada->diff($fecha_salida2);
         $horas = $diferencia->h;
-
-        $alm->tarifa = $horas * 1000;
-
+        if ($horas < 59) {
+            $alm->tarifa = 1000;
+        } else {
+            $alm->tarifa = $horas * 1000;
+        }
 
         $alm->id_estacionamiento > 0 ? $this->Model->actualizarEstacionamiento($alm) : $this->Model->registrarIngreso($alm);
 
         header("Location: index.php");
     }
-
 
 }

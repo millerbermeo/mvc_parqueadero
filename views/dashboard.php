@@ -2,12 +2,15 @@
 require_once "header.php";
 ?>
 
-<nav class="navbar navbar-light bg-light" style="padding-left: 25px; padding-right: 15px">
+<nav class="navbar navbar-dark bg-dark" style="padding-left: 25px; padding-right: 15px">
     <a class="navbar-brand">AGUACATO</a>
-    <form class="form-inline" style="display: flex; gap: 10px">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+    <form action="?c=show" method="post" class="form-inline" style="display: flex; gap: 10px">
+        <input class="form-control me-2" type="search" placeholder="Buscar por Placa" name="matricula"
+               aria-label="Search">
+        <input class="btn btn-outline-success" type="submit" value="Search"/>
     </form>
+
 </nav>
 <br>
 <br>
@@ -15,7 +18,7 @@ require_once "header.php";
 <div class="form w-full d-flex gap-5 justify-content-center" >
     <form action="?c=guardarIngreso" method="post" enctype="multipart/form-data" style="width:400px">
         <div class="form-outline">
-            <label class="form-label" for="formControlDefault">Placa</label>
+                <label class="form-label" for="formControlDefault">Nombre</label>
             <select class="form-select" aria-label="Default select example" name="user">
                 <option selected>Seleccion al Propietario</option>
                 <?php foreach ($this->Model->listarRegistros('usuarios') as $key) : ?>
@@ -55,7 +58,7 @@ require_once "header.php";
     </form>
 
     <div>
-        <h1>Parqueadero <br> El Aguacate</h1>
+
         <img style="width: 400px" src="views/fondo.jpg" alt="">
     </div>
 </div>
@@ -88,8 +91,7 @@ require_once "header.php";
             <td><?php echo $k->fecha_entrada; ?></td>
             <td><?php echo $k->fecha_salida; ?></td>
             <td>$ <?php echo $k->tarifa; ?></td>
-            <td><a class="btn btn-primary" href="?c=salida&id=<?php echo $k->id_estacionamiento?>">salida</a></td>
-            <td><a class="btn btn-danger" href="?c=eliminar&id=<?php echo $k->id_estacionamiento?>">Eliminar</a></td>
+            <td style="display: flex; gap: 10px"><a class="btn btn-primary" href="?c=salida&id=<?php echo $k->id_estacionamiento?>">salida</a><a class="btn btn-danger" href="?c=eliminar&id=<?php echo $k->id_estacionamiento?>">Eliminar</a></td>
 
         </tr>
     <?php endforeach; ?>

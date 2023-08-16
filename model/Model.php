@@ -113,6 +113,26 @@ class Model
         }
     }
 
+    public function listarPersonalizado($matricula) {
+        try {
+            $query = "SELECT r.id_estacionamiento, p.nombre_user, v.placa, u.piso, r.fecha_entrada, r.fecha_salida, r.tarifa
+                  FROM registroestacionamiento r
+                  INNER JOIN vehiculos v ON r.vehiculo_id = v.id_vehiculo
+                  INNER JOIN ubicacion u ON r.ubicacion_id = u.id_ubicacion
+                  INNER JOIN usuarios p ON r.usuario_id = p.id_user
+                  WHERE v.placa = ?";
+
+            $smt = $this->CNX->prepare($query);
+            $smt->execute(array($matricula));
+
+            // Obtener y devolver el resultado como un objeto
+            $result = $smt->fetch(PDO::FETCH_OBJ);
+            return $result;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
 
 
 }
